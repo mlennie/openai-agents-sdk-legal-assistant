@@ -2,7 +2,7 @@ from quart import Quart, request
 from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
 from agents import Agent, Runner
-from app.agents.legal_agent import create_legal_agent
+from app.agents.triage_agent import create_triage_agent
 import os
 from dotenv import load_dotenv
 import logging
@@ -41,12 +41,12 @@ logger.info(f"OpenAI API key loaded and set (starts with): {api_key[:15]}...")
 
 app = Quart(__name__)
 
-# Initialize the legal agent
+# Initialize the triage agent
 try:
-    legal_agent = create_legal_agent()
-    logger.info("Legal agent initialized successfully")
+    triage_agent = create_triage_agent()
+    logger.info("Triage agent initialized successfully")
 except Exception as e:
-    logger.error(f"Failed to initialize legal agent: {str(e)}")
+    logger.error(f"Failed to initialize triage agent: {str(e)}")
     raise
 
 # Initialize Twilio client
@@ -57,22 +57,22 @@ except Exception as e:
     logger.error(f"Failed to initialize Twilio client: {str(e)}")
     raise
 
-async def get_legal_advice(query):
-    """Get legal advice using OpenAI Agent."""
-    max_retries = 5  # Increased from 3
-    initial_delay = 2  # Increased from 1
+async def get_agent_response(query):
+    """Get response using the triage agent system."""
+    max_retries = 5
+    initial_delay = 2
     
     for attempt in range(max_retries):
         try:
-            logger.debug(f"Getting legal advice for query: {query} (attempt {attempt + 1}/{max_retries})")
-            result = await Runner.run(legal_agent, input=query)
+            logger.debug(f"Getting response for query: {query} (attempt {attempt + 1}/{max_retries})")
+            result = await Runner.run(triage_agent, input=query)
             logger.debug(f"Received response: {result.final_output}")
             return result.final_output
         except Exception as e:
-            logger.error(f"Error getting legal advice (attempt {attempt + 1}): {str(e)}")
+            logger.error(f"Error getting response (attempt {attempt + 1}): {str(e)}")
             if "429" in str(e):
                 if attempt < max_retries - 1:
-                    delay = initial_delay * (2 ** attempt)  # Exponential backoff
+                    delay = initial_delay * (2 ** attempt)
                     logger.warning(f"Rate limited. Retrying in {delay} seconds...")
                     await asyncio.sleep(delay)
                     continue
@@ -104,17 +104,17 @@ async def webhook():
             resp.message("I apologize, but I didn't receive any message. Please try again with your question.")
             return str(resp)
         
-        # Get legal information from OpenAI Agent
-        logger.debug("Calling get_legal_advice")
-        legal_response = await get_legal_advice(incoming_msg)
-        logger.debug(f"Legal response received: {legal_response}")
+        # Get response from appropriate agent through triage
+        logger.debug("Calling get_agent_response")
+        agent_response = await get_agent_response(incoming_msg)
+        logger.debug(f"Agent response received: {agent_response}")
         
-        if not legal_response:
-            raise ValueError("Empty response received from legal agent")
+        if not agent_response:
+            raise ValueError("Empty response received from agent")
         
         # Split response if it's too long (WhatsApp limit is 1600 characters)
-        if len(legal_response) > 1500:
-            parts = [legal_response[i:i+1500] for i in range(0, len(legal_response), 1500)]
+        if len(agent_response) > 1500:
+            parts = [agent_response[i:i+1500] for i in range(0, len(agent_response), 1500)]
             
             # Send all parts through Twilio API in order
             for i, part in enumerate(parts):
@@ -135,7 +135,7 @@ async def webhook():
         else:
             # For short messages, send through TwiML
             resp = MessagingResponse()
-            resp.message(legal_response)
+            resp.message(agent_response)
             response_str = str(resp)
             logger.debug(f"Final response XML: {response_str}")
             return response_str
