@@ -1,8 +1,8 @@
 from quart import Quart, request
 from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
-from openai.agents import Agent, Runner
-from app.agents.legal_agent import legal_agent
+from agents import Agent, Runner
+from app.agents.legal_agent import create_legal_agent
 import os
 from dotenv import load_dotenv
 import logging
@@ -20,6 +20,9 @@ logger = logging.getLogger(__name__)
 load_dotenv()
 
 app = Quart(__name__)
+
+# Initialize the legal agent
+legal_agent = create_legal_agent()
 
 async def get_legal_advice(query):
     """Get legal advice using OpenAI Agent."""
