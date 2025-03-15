@@ -49,6 +49,14 @@ except Exception as e:
     logger.error(f"Failed to initialize legal agent: {str(e)}")
     raise
 
+# Initialize Twilio client
+try:
+    twilio_client = Client(os.getenv('TWILIO_ACCOUNT_SID'), os.getenv('TWILIO_AUTH_TOKEN'))
+    logger.info("Twilio client initialized successfully")
+except Exception as e:
+    logger.error(f"Failed to initialize Twilio client: {str(e)}")
+    raise
+
 async def get_legal_advice(query):
     """Get legal advice using OpenAI Agent."""
     max_retries = 5  # Increased from 3
@@ -83,21 +91,19 @@ async def webhook():
     """Handle incoming WhatsApp messages."""
     logger.debug("Received webhook request")
     
-    # Get the message from the request
-    form = await request.form
-    incoming_msg = form.get('Body', '').strip()
-    logger.debug(f"Incoming message: {incoming_msg}")
-    
-    if not incoming_msg:
-        logger.error("Empty message received")
-        error_resp = MessagingResponse()
-        error_resp.message("I apologize, but I didn't receive any message. Please try again with your question.")
-        return str(error_resp)
-    
-    # Create Twilio response object
-    resp = MessagingResponse()
-    
     try:
+        # Get the message from the request
+        form = await request.form
+        incoming_msg = form.get('Body', '').strip()
+        from_number = form.get('From', '')
+        logger.debug(f"Incoming message from {from_number}: {incoming_msg}")
+        
+        if not incoming_msg:
+            logger.error("Empty message received")
+            resp = MessagingResponse()
+            resp.message("I apologize, but I didn't receive any message. Please try again with your question.")
+            return str(resp)
+        
         # Get legal information from OpenAI Agent
         logger.debug("Calling get_legal_advice")
         legal_response = await get_legal_advice(incoming_msg)
@@ -106,16 +112,64 @@ async def webhook():
         if not legal_response:
             raise ValueError("Empty response received from legal agent")
         
-        # Add the response to the Twilio message
-        resp.message(legal_response)
-        logger.debug("Response message created successfully")
+        # Split response if it's too long (WhatsApp limit is 1600 characters)
+        if len(legal_response) > 1500:
+            parts = [legal_response[i:i+1500] for i in range(0, len(legal_response), 1500)]
+            
+            # Send all parts through Twilio API in order
+            for i, part in enumerate(parts):
+                try:
+                    suffix = f"\n(Part {i+1}/{len(parts)})" if len(parts) > 1 else ""
+                    twilio_client.messages.create(
+                        body=part + suffix,
+                        from_='whatsapp:+14155238886',  # Default Twilio test number
+                        to=from_number
+                    )
+                    logger.debug(f"Sent part {i+1} of {len(parts)}")
+                except Exception as e:
+                    logger.error(f"Error sending message part {i+1}: {str(e)}")
+            
+            # Return empty TwiML response since we've sent all messages via API
+            resp = MessagingResponse()
+            return str(resp)
+        else:
+            # For short messages, send through TwiML
+            resp = MessagingResponse()
+            resp.message(legal_response)
+            response_str = str(resp)
+            logger.debug(f"Final response XML: {response_str}")
+            return response_str
         
-        return str(resp)
     except Exception as e:
         logger.error(f"Error in webhook: {str(e)}")
         error_resp = MessagingResponse()
         error_resp.message("I apologize, but I'm having trouble processing your request. Please try again later.")
         return str(error_resp)
+
+@app.route("/test-twilio", methods=["GET"])
+async def test_twilio():
+    """Test Twilio WhatsApp configuration."""
+    try:
+        # List available WhatsApp senders
+        senders = twilio_client.messaging.v1.services.list(limit=20)
+        whatsapp_numbers = []
+        
+        for service in senders:
+            if 'whatsapp' in service.friendly_name.lower():
+                whatsapp_numbers.append(service.friendly_name)
+        
+        return {
+            "status": "success",
+            "message": "Twilio client is working",
+            "account_sid": twilio_client.account_sid,
+            "whatsapp_services": whatsapp_numbers
+        }
+    except Exception as e:
+        logger.error(f"Error testing Twilio: {str(e)}")
+        return {
+            "status": "error",
+            "message": str(e)
+        }
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001) 
