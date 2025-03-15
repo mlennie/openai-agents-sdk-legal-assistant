@@ -1,0 +1,461 @@
+ * Serving Flask app 'app'
+ * Debug mode: on
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:5004
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 964-364-966
+DEBUG:__main__:Received webhook request
+DEBUG:__main__:Incoming message: I need to create a contract between myself and my tenant. We will lease my apartment to him in Mexico for one year. Can you create a rental contract for us?
+DEBUG:__main__:Calling get_legal_advice
+DEBUG:asyncio:Using selector: KqueueSelector
+DEBUG:__main__:Getting legal advice for query: I need to create a contract between myself and my tenant. We will lease my apartment to him in Mexico for one year. Can you create a rental contract for us?
+DEBUG:openai.agents.tracing:Creating trace Agent workflow with id trace_2def824fcf19457597afed9b9b681749
+DEBUG:openai.agents.tracing:Setting current trace: trace_2def824fcf19457597afed9b9b681749
+DEBUG:openai.agents.tracing:Creating span <agents.tracing.span_data.AgentSpanData object at 0x10f5fa710> with id None
+DEBUG:openai.agents:Running agent Legal Assistant (turn 1)
+DEBUG:openai.agents.tracing:Creating span <agents.tracing.span_data.ResponseSpanData object at 0x10f0588d0> with id None
+DEBUG:openai.agents:Calling LLM gpt-4o with input:
+[
+  {
+    "content": "I need to create a contract between myself and my tenant. We will lease my apartment to him in Mexico for one year. Can you create a rental contract for us?",
+    "role": "user"
+  }
+]
+Tools:
+[]
+Stream: False
+Tool choice: NOT_GIVEN
+Response format: NOT_GIVEN
+
+DEBUG:openai._base_client:Request options: {'method': 'post', 'url': '/responses', 'headers': {'User-Agent': 'Agents/Python 0.0.0'}, 'files': None, 'json_data': {'input': [{'content': 'I need to create a contract between myself and my tenant. We will lease my apartment to him in Mexico for one year. Can you create a rental contract for us?', 'role': 'user'}], 'model': 'gpt-4o', 'include': [], 'instructions': 'You are a Mexican lawyer. Your role is to:\n      Use your knowledge of the mexican legal system to provide legal assistance and advice to the user.\n    \n    Always maintain a professional and informative tone while being accessible to non-legal experts.', 'stream': False, 'tools': []}}
+DEBUG:httpcore.connection:connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x10f678050>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x10f607890> server_hostname='api.openai.com' timeout=5.0
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x10f5d2710>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.connection:connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x10f678980>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x10f305130> server_hostname='api.openai.com' timeout=5.0
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x10f5d3750>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Sat, 15 Mar 2025 04:52:56 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'openai-version', b'2020-10-01'), (b'openai-organization', b'user-ezyqzvpyswt6uol7fn3qmara'), (b'x-request-id', b'req_e1af7339f638e8236577a63be9db15bb'), (b'openai-processing-ms', b'4910'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=4MFw0ZNj6BhZDHWiMBFlWESp1X54puSw1GvAIcVeqLk-1742014376-1.0.1.1-TUNrIFnSsd0sMJix.6a_0Aj1LYTKe34aivpAWGvnXYgw9FMfenUf6F4NGLVZWs0GKvq6IhvnfhNuxSjf8wfa1s5.WKnW2I7ODLi0Fn0TGwU; path=/; expires=Sat, 15-Mar-25 05:22:56 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'X-Content-Type-Options', b'nosniff'), (b'Set-Cookie', b'_cfuvid=ltblt4wbk02xNl3zpTxyIbMuPWzZIxtp98T7TsiXDoU-1742014376352-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9209675bef3721b8-GDL'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai._base_client:HTTP Request: POST https://api.openai.com/v1/responses "200 OK"
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 204, b'No Content', [(b'Date', b'Sat, 15 Mar 2025 04:52:56 GMT'), (b'Connection', b'keep-alive'), (b'x-request-id', b'req_2105015069db82068004cb2bb9577e44'), (b'openai-processing-ms', b'171'), (b'openai-version', b'2020-10-01'), (b'openai-organization', b'user-ezyqzvpyswt6uol7fn3qmara'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=GzKGfsT783.bCtQKcEA0zsQr6Woa8_PKFjoXVC3_yCQ-1742014376-1.0.1.1-EQ8wGCDfpMrstSHg9zfDtCY2135u5Rqh4J99SsiiGBxbZSgC9Ii0vn1p9NkhMgdFCSbg3kXcOWXrISQSNZjNO3JaGLPd6XMMKq3DDG7dC_Y; path=/; expires=Sat, 15-Mar-25 05:22:56 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'X-Content-Type-Options', b'nosniff'), (b'Set-Cookie', b'_cfuvid=YNnd7KL75Bq5OsafMIbkgLKCzTqvqkvNmadAm8tHOtU-1742014376373-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9209677a2c8421b6-GDL'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/traces/ingest "HTTP/1.1 204 No Content"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai.agents:LLM resp:
+[
+  {
+    "id": "msg_67d507a3c1108192bb034ab973aede3b051bb28f5239615c",
+    "content": [
+      {
+        "annotations": [],
+        "text": "I can guide you on how to create a rental contract for leasing your apartment in Mexico. However, keep in mind this is a general guide and you may want to consult with a local lawyer for personalized advice. Here\u2019s a basic outline of what the contract should include:\n\n1. **Parties Involved**\n   - Full names and addresses of both the landlord (you) and the tenant.\n\n2. **Property Description**\n   - Detailed description of the apartment, including address and any specific features or furnishings.\n\n3. **Term of Lease**\n   - Start and end dates of the lease. Typically, this would be a one-year term.\n\n4. **Rent Payment**\n   - Amount of monthly rent.\n   - Due date for rent payment.\n   - Accepted payment methods.\n\n5. **Security Deposit**\n   - Amount of the security deposit.\n   - Conditions for its return at the end of the lease.\n\n6. **Obligations of the Tenant**\n   - Maintenance of the property.\n   - Payment of utilities (if applicable).\n   - Restrictions on alterations or subleasing.\n\n7. **Landlord\u2019s Obligations**\n   - Ensure the property is habitable and maintained.\n   - Provide required repairs and maintenance.\n\n8. **Prohibited Activities**\n   - Any specific activities you do not allow on the property (e.g., smoking, pets).\n\n9. **Termination and Renewal**\n   - Conditions under which the lease can be terminated.\n   - Process for lease renewal.\n\n10. **Governing Law**\n    - State that the contract is governed by the laws of Mexico.\n\n11. **Signatures**\n    - Both parties should sign and date the contract.\n\n12. **Additional Clauses**\n    - Any other specific agreements, such as penalties for late payment.\n\nOnce you draft this contract, make sure both you and the tenant read and understand all terms. To ensure compliance with local laws and that all necessary clauses are included, it's advisable to have a local lawyer review the agreement.",
+        "type": "output_text"
+      }
+    ],
+    "role": "assistant",
+    "status": "completed",
+    "type": "message"
+  }
+]
+
+DEBUG:openai.agents.tracing:Exported 1 items
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:openai.agents.tracing:Resetting current trace
+DEBUG:__main__:Received response: I can guide you on how to create a rental contract for leasing your apartment in Mexico. However, keep in mind this is a general guide and you may want to consult with a local lawyer for personalized advice. Here’s a basic outline of what the contract should include:
+
+1. **Parties Involved**
+   - Full names and addresses of both the landlord (you) and the tenant.
+
+2. **Property Description**
+   - Detailed description of the apartment, including address and any specific features or furnishings.
+
+3. **Term of Lease**
+   - Start and end dates of the lease. Typically, this would be a one-year term.
+
+4. **Rent Payment**
+   - Amount of monthly rent.
+   - Due date for rent payment.
+   - Accepted payment methods.
+
+5. **Security Deposit**
+   - Amount of the security deposit.
+   - Conditions for its return at the end of the lease.
+
+6. **Obligations of the Tenant**
+   - Maintenance of the property.
+   - Payment of utilities (if applicable).
+   - Restrictions on alterations or subleasing.
+
+7. **Landlord’s Obligations**
+   - Ensure the property is habitable and maintained.
+   - Provide required repairs and maintenance.
+
+8. **Prohibited Activities**
+   - Any specific activities you do not allow on the property (e.g., smoking, pets).
+
+9. **Termination and Renewal**
+   - Conditions under which the lease can be terminated.
+   - Process for lease renewal.
+
+10. **Governing Law**
+    - State that the contract is governed by the laws of Mexico.
+
+11. **Signatures**
+    - Both parties should sign and date the contract.
+
+12. **Additional Clauses**
+    - Any other specific agreements, such as penalties for late payment.
+
+Once you draft this contract, make sure both you and the tenant read and understand all terms. To ensure compliance with local laws and that all necessary clauses are included, it's advisable to have a local lawyer review the agreement.
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:__main__:Legal response received: I can guide you on how to create a rental contract for leasing your apartment in Mexico. However, keep in mind this is a general guide and you may want to consult with a local lawyer for personalized advice. Here’s a basic outline of what the contract should include:
+
+1. **Parties Involved**
+   - Full names and addresses of both the landlord (you) and the tenant.
+
+2. **Property Description**
+   - Detailed description of the apartment, including address and any specific features or furnishings.
+
+3. **Term of Lease**
+   - Start and end dates of the lease. Typically, this would be a one-year term.
+
+4. **Rent Payment**
+   - Amount of monthly rent.
+   - Due date for rent payment.
+   - Accepted payment methods.
+
+5. **Security Deposit**
+   - Amount of the security deposit.
+   - Conditions for its return at the end of the lease.
+
+6. **Obligations of the Tenant**
+   - Maintenance of the property.
+   - Payment of utilities (if applicable).
+   - Restrictions on alterations or subleasing.
+
+7. **Landlord’s Obligations**
+   - Ensure the property is habitable and maintained.
+   - Provide required repairs and maintenance.
+
+8. **Prohibited Activities**
+   - Any specific activities you do not allow on the property (e.g., smoking, pets).
+
+9. **Termination and Renewal**
+   - Conditions under which the lease can be terminated.
+   - Process for lease renewal.
+
+10. **Governing Law**
+    - State that the contract is governed by the laws of Mexico.
+
+11. **Signatures**
+    - Both parties should sign and date the contract.
+
+12. **Additional Clauses**
+    - Any other specific agreements, such as penalties for late payment.
+
+Once you draft this contract, make sure both you and the tenant read and understand all terms. To ensure compliance with local laws and that all necessary clauses are included, it's advisable to have a local lawyer review the agreement.
+DEBUG:__main__:Response message created successfully
+INFO:werkzeug:127.0.0.1 - - [14/Mar/2025 22:52:56] "POST /webhook HTTP/1.1" 200 -
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 204, b'No Content', [(b'Date', b'Sat, 15 Mar 2025 04:52:56 GMT'), (b'Connection', b'keep-alive'), (b'x-request-id', b'req_87b42fdd58f79784807756f3616210ed'), (b'openai-processing-ms', b'197'), (b'openai-version', b'2020-10-01'), (b'openai-organization', b'user-ezyqzvpyswt6uol7fn3qmara'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9209677c7e8d21b6-GDL'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/traces/ingest "HTTP/1.1 204 No Content"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai.agents.tracing:Exported 1 items
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 204, b'No Content', [(b'Date', b'Sat, 15 Mar 2025 04:52:56 GMT'), (b'Connection', b'keep-alive'), (b'x-request-id', b'req_1748a436660e454751561c416b29cdd8'), (b'openai-processing-ms', b'128'), (b'openai-version', b'2020-10-01'), (b'openai-organization', b'user-ezyqzvpyswt6uol7fn3qmara'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9209677e1fad21b6-GDL'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/traces/ingest "HTTP/1.1 204 No Content"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai.agents.tracing:Exported 1 items
+DEBUG:__main__:Received webhook request
+DEBUG:__main__:Incoming message: Necesito crear un contrato entre mi inquilino y yo. Vamos a arrendar mi apartamento en México por un año. ¿Puede crear un contrato de arrendamiento para nosotros?
+DEBUG:__main__:Calling get_legal_advice
+DEBUG:asyncio:Using selector: KqueueSelector
+DEBUG:__main__:Getting legal advice for query: Necesito crear un contrato entre mi inquilino y yo. Vamos a arrendar mi apartamento en México por un año. ¿Puede crear un contrato de arrendamiento para nosotros?
+DEBUG:openai.agents.tracing:Creating trace Agent workflow with id trace_072109ca50cd48868974fc105968e450
+DEBUG:openai.agents.tracing:Setting current trace: trace_072109ca50cd48868974fc105968e450
+DEBUG:openai.agents.tracing:Creating span <agents.tracing.span_data.AgentSpanData object at 0x113819220> with id None
+DEBUG:openai.agents:Running agent Legal Assistant (turn 1)
+DEBUG:openai.agents.tracing:Creating span <agents.tracing.span_data.ResponseSpanData object at 0x113815c50> with id None
+DEBUG:openai.agents:Calling LLM gpt-4o with input:
+[
+  {
+    "content": "Necesito crear un contrato entre mi inquilino y yo. Vamos a arrendar mi apartamento en M\u00e9xico por un a\u00f1o. \u00bfPuede crear un contrato de arrendamiento para nosotros?",
+    "role": "user"
+  }
+]
+Tools:
+[]
+Stream: False
+Tool choice: NOT_GIVEN
+Response format: NOT_GIVEN
+
+DEBUG:openai._base_client:Request options: {'method': 'post', 'url': '/responses', 'headers': {'User-Agent': 'Agents/Python 0.0.0'}, 'files': None, 'json_data': {'input': [{'content': 'Necesito crear un contrato entre mi inquilino y yo. Vamos a arrendar mi apartamento en México por un año. ¿Puede crear un contrato de arrendamiento para nosotros?', 'role': 'user'}], 'model': 'gpt-4o', 'include': [], 'instructions': 'You are a Mexican lawyer. Your role is to:\n      Use your knowledge of the mexican legal system to provide legal assistance and advice to the user.\n    \n    Always maintain a professional and informative tone while being accessible to non-legal experts.', 'stream': False, 'tools': []}}
+DEBUG:httpcore.connection:close.started
+DEBUG:httpcore.connection:close.failed exception=RuntimeError('Event loop is closed')
+DEBUG:openai._base_client:Encountered Exception
+Traceback (most recent call last):
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/openai/_base_client.py", line 1500, in _request
+    response = await self._client.send(
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/httpx/_client.py", line 1629, in send
+    response = await self._send_handling_auth(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<4 lines>...
+    )
+    ^
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/httpx/_client.py", line 1657, in _send_handling_auth
+    response = await self._send_handling_redirects(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<3 lines>...
+    )
+    ^
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/httpx/_client.py", line 1694, in _send_handling_redirects
+    response = await self._send_single_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/httpx/_client.py", line 1730, in _send_single_request
+    response = await transport.handle_async_request(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/httpx/_transports/default.py", line 394, in handle_async_request
+    resp = await self._pool.handle_async_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 256, in handle_async_request
+    raise exc from None
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 229, in handle_async_request
+    await self._close_connections(closing)
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/httpcore/_async/connection_pool.py", line 345, in _close_connections
+    await connection.aclose()
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/httpcore/_async/connection.py", line 173, in aclose
+    await self._connection.aclose()
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/httpcore/_async/http11.py", line 258, in aclose
+    await self._network_stream.aclose()
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/httpcore/_backends/anyio.py", line 53, in aclose
+    await self._stream.aclose()
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/anyio/streams/tls.py", line 201, in aclose
+    await self.transport_stream.aclose()
+  File "/Users/montylennie/lexlinker-agent/venv/lib/python3.13/site-packages/anyio/_backends/_asyncio.py", line 1306, in aclose
+    self._transport.close()
+    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/selector_events.py", line 1202, in close
+    super().close()
+    ~~~~~~~~~~~~~^^
+  File "/usr/local/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/selector_events.py", line 865, in close
+    self._loop.call_soon(self._call_connection_lost, None)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 828, in call_soon
+    self._check_closed()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "/usr/local/Cellar/python@3.13/3.13.1/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py", line 551, in _check_closed
+    raise RuntimeError('Event loop is closed')
+RuntimeError: Event loop is closed
+DEBUG:openai._base_client:2 retries left
+INFO:openai._base_client:Retrying request to /responses in 0.441515 seconds
+DEBUG:openai._base_client:Request options: {'method': 'post', 'url': '/responses', 'headers': {'User-Agent': 'Agents/Python 0.0.0'}, 'files': None, 'json_data': {'input': [{'content': 'Necesito crear un contrato entre mi inquilino y yo. Vamos a arrendar mi apartamento en México por un año. ¿Puede crear un contrato de arrendamiento para nosotros?', 'role': 'user'}], 'model': 'gpt-4o', 'include': [], 'instructions': 'You are a Mexican lawyer. Your role is to:\n      Use your knowledge of the mexican legal system to provide legal assistance and advice to the user.\n    \n    Always maintain a professional and informative tone while being accessible to non-legal experts.', 'stream': False, 'tools': []}}
+DEBUG:httpcore.connection:connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x1138087d0>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x10f607890> server_hostname='api.openai.com' timeout=5.0
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x10f6f9350>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.connection:close.started
+DEBUG:httpcore.connection:close.complete
+DEBUG:httpcore.connection:connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x10f5d0e10>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x10f305130> server_hostname='api.openai.com' timeout=5.0
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x10f6fa650>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 204, b'No Content', [(b'Date', b'Sat, 15 Mar 2025 04:54:03 GMT'), (b'Connection', b'keep-alive'), (b'x-request-id', b'req_e1da9350a97d1c786beb4af771e43ec1'), (b'openai-processing-ms', b'235'), (b'openai-version', b'2020-10-01'), (b'openai-organization', b'user-ezyqzvpyswt6uol7fn3qmara'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9209691bda6a21b2-GDL'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/traces/ingest "HTTP/1.1 204 No Content"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai.agents.tracing:Exported 1 items
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Sat, 15 Mar 2025 04:54:05 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'openai-version', b'2020-10-01'), (b'openai-organization', b'user-ezyqzvpyswt6uol7fn3qmara'), (b'x-request-id', b'req_db0299dde3a057c20551b9a957dcde3e'), (b'openai-processing-ms', b'6378'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'92096902d86d21ad-GDL'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai._base_client:HTTP Request: POST https://api.openai.com/v1/responses "200 OK"
+DEBUG:openai.agents:LLM resp:
+[
+  {
+    "id": "msg_67d507e75b3c8192955d0f2b627167c302d0cc182d1a037a",
+    "content": [
+      {
+        "annotations": [],
+        "text": "Puedo proporcionarte una gu\u00eda sobre c\u00f3mo estructurar un contrato de arrendamiento en M\u00e9xico, pero te aconsejo que trabajes con un abogado para asegurarte de que el contrato cumpla con todas las leyes locales y se adapte a tus necesidades espec\u00edficas.\n\n### Estructura B\u00e1sica de un Contrato de Arrendamiento\n\n1. **Identificaci\u00f3n de las Partes:**\n   - Nombre completo, direcci\u00f3n e identificaci\u00f3n (como el INE) del arrendador y del arrendatario.\n\n2. **Descripci\u00f3n del Inmueble:**\n   - Direcci\u00f3n completa y detalles espec\u00edficos del apartamento.\n\n3. **Duraci\u00f3n del Arrendamiento:**\n   - Fecha de inicio y t\u00e9rmino del contrato (por ejemplo, un a\u00f1o).\n\n4. **Renta:**\n   - Monto de la renta mensual, fecha de pago y modalidad de pago (transferencia bancaria, cheque, etc.).\n   - Posibles aumentos de renta y condiciones para los mismos.\n\n5. **Dep\u00f3sito:**\n   - Monto del dep\u00f3sito de garant\u00eda y condiciones para su devoluci\u00f3n.\n\n6. **Obligaciones del Arrendador:**\n   - Mantenimiento estructural del inmueble, seguro, etc.\n\n7. **Obligaciones del Arrendatario:**\n   - Cuidado del inmueble, pago de servicios p\u00fablicos, etc.\n\n8. **Cl\u00e1usulas Adicionales:**\n   - Pol\u00edtica de mascotas, prohibiciones, uso permitido del inmueble, etc.\n\n9. **Causales de Terminaci\u00f3n:**\n   - Condiciones por las cuales el contrato puede ser rescindido por cualquiera de las partes.\n\n10. **Notificaciones:**\n    - Direcci\u00f3n para recibir notificaciones legales.\n\n11. **Jurisdicci\u00f3n:**\n    - Determinar las leyes que regir\u00e1n el contrato y el lugar en caso de un litigio.\n\n12. **Firmas:**\n    - Espacios para que ambas partes firmen y fecha de firma.\n\n### Recomendaciones\n\n- Aseg\u00farate de incluir una cl\u00e1usula que cubra la resoluci\u00f3n de disputas.\n- Es importante que ambos, t\u00fa y el inquilino, revisen el contrato cuidadosamente antes de firmar.\n- Considera registrar el contrato en el Registro P\u00fablico de la Propiedad, dependiendo de las circunstancias.\n\nTe reitero la importancia de consultar con un abogado local para elaborar este contrato. Un profesional podr\u00e1 asegurarse de que todo est\u00e9 en orden y cumpla con las normativas locales.",
+        "type": "output_text"
+      }
+    ],
+    "role": "assistant",
+    "status": "completed",
+    "type": "message"
+  }
+]
+
+DEBUG:openai.agents.tracing:Resetting current trace
+DEBUG:__main__:Received response: Puedo proporcionarte una guía sobre cómo estructurar un contrato de arrendamiento en México, pero te aconsejo que trabajes con un abogado para asegurarte de que el contrato cumpla con todas las leyes locales y se adapte a tus necesidades específicas.
+
+### Estructura Básica de un Contrato de Arrendamiento
+
+1. **Identificación de las Partes:**
+   - Nombre completo, dirección e identificación (como el INE) del arrendador y del arrendatario.
+
+2. **Descripción del Inmueble:**
+   - Dirección completa y detalles específicos del apartamento.
+
+3. **Duración del Arrendamiento:**
+   - Fecha de inicio y término del contrato (por ejemplo, un año).
+
+4. **Renta:**
+   - Monto de la renta mensual, fecha de pago y modalidad de pago (transferencia bancaria, cheque, etc.).
+   - Posibles aumentos de renta y condiciones para los mismos.
+
+5. **Depósito:**
+   - Monto del depósito de garantía y condiciones para su devolución.
+
+6. **Obligaciones del Arrendador:**
+   - Mantenimiento estructural del inmueble, seguro, etc.
+
+7. **Obligaciones del Arrendatario:**
+   - Cuidado del inmueble, pago de servicios públicos, etc.
+
+8. **Cláusulas Adicionales:**
+   - Política de mascotas, prohibiciones, uso permitido del inmueble, etc.
+
+9. **Causales de Terminación:**
+   - Condiciones por las cuales el contrato puede ser rescindido por cualquiera de las partes.
+
+10. **Notificaciones:**
+    - Dirección para recibir notificaciones legales.
+
+11. **Jurisdicción:**
+    - Determinar las leyes que regirán el contrato y el lugar en caso de un litigio.
+
+12. **Firmas:**
+    - Espacios para que ambas partes firmen y fecha de firma.
+
+### Recomendaciones
+
+- Asegúrate de incluir una cláusula que cubra la resolución de disputas.
+- Es importante que ambos, tú y el inquilino, revisen el contrato cuidadosamente antes de firmar.
+- Considera registrar el contrato en el Registro Público de la Propiedad, dependiendo de las circunstancias.
+
+Te reitero la importancia de consultar con un abogado local para elaborar este contrato. Un profesional podrá asegurarse de que todo esté en orden y cumpla con las normativas locales.
+DEBUG:__main__:Legal response received: Puedo proporcionarte una guía sobre cómo estructurar un contrato de arrendamiento en México, pero te aconsejo que trabajes con un abogado para asegurarte de que el contrato cumpla con todas las leyes locales y se adapte a tus necesidades específicas.
+
+### Estructura Básica de un Contrato de Arrendamiento
+
+1. **Identificación de las Partes:**
+   - Nombre completo, dirección e identificación (como el INE) del arrendador y del arrendatario.
+
+2. **Descripción del Inmueble:**
+   - Dirección completa y detalles específicos del apartamento.
+
+3. **Duración del Arrendamiento:**
+   - Fecha de inicio y término del contrato (por ejemplo, un año).
+
+4. **Renta:**
+   - Monto de la renta mensual, fecha de pago y modalidad de pago (transferencia bancaria, cheque, etc.).
+   - Posibles aumentos de renta y condiciones para los mismos.
+
+5. **Depósito:**
+   - Monto del depósito de garantía y condiciones para su devolución.
+
+6. **Obligaciones del Arrendador:**
+   - Mantenimiento estructural del inmueble, seguro, etc.
+
+7. **Obligaciones del Arrendatario:**
+   - Cuidado del inmueble, pago de servicios públicos, etc.
+
+8. **Cláusulas Adicionales:**
+   - Política de mascotas, prohibiciones, uso permitido del inmueble, etc.
+
+9. **Causales de Terminación:**
+   - Condiciones por las cuales el contrato puede ser rescindido por cualquiera de las partes.
+
+10. **Notificaciones:**
+    - Dirección para recibir notificaciones legales.
+
+11. **Jurisdicción:**
+    - Determinar las leyes que regirán el contrato y el lugar en caso de un litigio.
+
+12. **Firmas:**
+    - Espacios para que ambas partes firmen y fecha de firma.
+
+### Recomendaciones
+
+- Asegúrate de incluir una cláusula que cubra la resolución de disputas.
+- Es importante que ambos, tú y el inquilino, revisen el contrato cuidadosamente antes de firmar.
+- Considera registrar el contrato en el Registro Público de la Propiedad, dependiendo de las circunstancias.
+
+Te reitero la importancia de consultar con un abogado local para elaborar este contrato. Un profesional podrá asegurarse de que todo esté en orden y cumpla con las normativas locales.
+DEBUG:__main__:Response message created successfully
+INFO:werkzeug:127.0.0.1 - - [14/Mar/2025 22:54:05] "POST /webhook HTTP/1.1" 200 -
+DEBUG:httpcore.connection:close.started
+DEBUG:httpcore.connection:close.complete
+DEBUG:httpcore.connection:connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x10f6f9810>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x10f305130> server_hostname='api.openai.com' timeout=5.0
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x10f5a28d0>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 204, b'No Content', [(b'Date', b'Sat, 15 Mar 2025 04:54:08 GMT'), (b'Connection', b'keep-alive'), (b'x-request-id', b'req_0ca46c9d4301fc903867eac2c88b7c48'), (b'openai-processing-ms', b'298'), (b'openai-version', b'2020-10-01'), (b'openai-organization', b'user-ezyqzvpyswt6uol7fn3qmara'), (b'strict-transport-security', b'max-age=31536000; includeSubDomains; preload'), (b'cf-cache-status', b'DYNAMIC'), (b'X-Content-Type-Options', b'nosniff'), (b'Server', b'cloudflare'), (b'CF-RAY', b'9209693e1d0d21ac-GDL'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/traces/ingest "HTTP/1.1 204 No Content"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai.agents.tracing:Exported 2 items
+INFO:werkzeug: * Detected change in '/Users/montylennie/lexlinker-agent/app.py', reloading
+DEBUG:openai.agents.tracing:Shutting down trace provider
+DEBUG:openai.agents.tracing:Shutting down trace processor <agents.tracing.processors.BatchTraceProcessor object at 0x10f2c1fd0>
+INFO:werkzeug: * Restarting with stat
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 964-364-966
