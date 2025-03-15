@@ -1,7 +1,7 @@
 from flask import Flask, request
 from twilio.rest import Client
 from twilio.twiml.messaging_response import MessagingResponse
-from agents import Agent, Runner, WebSearchTool
+from agents import Agent, Runner, WebSearchTool, guardrail
 import os
 from dotenv import load_dotenv
 import logging
@@ -18,6 +18,20 @@ load_dotenv()
 app = Flask(__name__)
 executor = ThreadPoolExecutor(max_workers=3)
 
+# Define content moderation guardrail
+content_filter = guardrail(
+    name="Content Moderation",
+    description="Ensure responses are professional, respectful, and free from inappropriate content",
+    check="""
+    Verify that the response:
+    1. Contains no hate speech, discrimination, or bias
+    2. Uses no profanity or offensive language
+    3. Contains no violent or threatening content
+    4. Maintains professional and respectful tone
+    5. Focuses solely on legal advice and information
+    """,
+)
+
 # Create a legal assistant agent
 legal_agent = Agent(
     name="Legal Assistant",
@@ -29,7 +43,8 @@ legal_agent = Agent(
     
     Always maintain a professional and informative tone while being accessible to non-legal experts.
     When searching for information, focus on official government sources, legal databases, and reputable law firms.""",
-    tools=[WebSearchTool(user_location={"type": "approximate", "city": "Mexico City"})]
+    tools=[WebSearchTool(user_location={"type": "approximate", "city": "Mexico City"})],
+    guardrails=[content_filter]
 )
 
 async def get_legal_advice(query):
