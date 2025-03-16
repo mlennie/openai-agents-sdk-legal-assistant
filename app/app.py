@@ -102,18 +102,34 @@ async def webhook():
         })
 
         # Process message with full conversation history
+        logger.info("Processing message with triage agent...")
         result = await Runner.run(triage_agent, input_messages)
         response = result.final_output
+        logger.info(f"Got response from agent: {response[:100]}...")
 
         # Store the conversation in MongoDB
         update_conversation_history(normalized_number, "user", message_body)
         update_conversation_history(normalized_number, "assistant", response)
+        logger.info("Updated conversation history in MongoDB")
 
         # Send response through TwiML
-        resp = MessagingResponse()
-        resp.message(response)
-        logger.debug("Sent response through TwiML")
-        return str(resp)
+        try:
+            resp = MessagingResponse()
+            resp.message(response)
+            twiml_response = str(resp)
+            logger.info(f"Created TwiML response: {twiml_response[:100]}...")
+            return twiml_response
+        except Exception as e:
+            logger.error(f"Error creating/sending TwiML response: {str(e)}")
+            # Try fallback to direct message sending
+            await asyncio.to_thread(
+                twilio_client.messages.create,
+                body=response,
+                from_=os.getenv('TWILIO_PHONE_NUMBER'),
+                to=from_number
+            )
+            logger.info("Sent response using direct message sending")
+            return "", 200
 
     except Exception as e:
         logger.error(f"Error in webhook: {str(e)}")
