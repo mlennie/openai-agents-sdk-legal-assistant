@@ -2,8 +2,7 @@
 
 A Flask-based API that connects to Twilio WhatsApp to provide legal information using OpenAI's GPT-4 model.
 
-
-https://github.com/user-attachments/assets/c13942a2-1990-4282-80eb-bcf4d87b4d47
+![0316-01_1742163844911-ezgif com-resize](https://github.com/user-attachments/assets/4efd4bcb-a7f2-40ea-afc7-1211e326fa7f)
 
 
 ## Setup Instructions
