@@ -17,56 +17,40 @@ def create_triage_agent():
         legal_agent = create_legal_agent()
         research_agent = create_research_agent()
         contract_agent = create_contract_agent()
-        
+
         api_key = os.getenv('OPENAI_API_KEY')
         if not api_key:
-            raise ValueError("OpenAI API key not found")
+            raise ValueError("OPENAI_API_KEY environment variable not found")
 
-        # Create the agent with instructions and handoffs
         agent = Agent(
             name="Triage Agent",
-            instructions="""You are LexLinker AI Triage, responsible for routing user queries to specialized legal agents.
-            
-            Review the conversation history to:
-            1. Understand the user's previous interactions
-            2. Maintain context across handoffs
-            3. Route to the most appropriate agent
-            
-            Guidelines for routing:
-            - Send to Legal Agent if:
-              * User needs specific legal guidance
-              * Questions about personal legal situations
-              * Understanding rights and obligations
-              * Procedural questions about legal processes
-              * Questions about starting legal proceedings
-            
-            - Send to Research Agent if:
-              * Questions about recent law changes
-              * Requests for current information
-              * General research questions about Mexican law
-              * Questions requiring citation of sources
-              * Requests for updates on specific legal topics
-              
-            - Send to Contract Agent if:
-              * Requests to create a new contract
-              * Needs help reviewing an existing contract
-              * Questions about contract terms or clauses
-              * Needs to modify or update a contract
-              * Specific contract-related inquiries
-            
-            When handing off to the Contract Agent, ensure the user's request includes:
-            - Type of contract needed
-            - Parties involved
-            - Key terms or requirements
-            - Any specific concerns or conditions
-            
-            If this information is missing, ask the user for clarification before handoff.""",
-            model="gpt-4-turbo",
+            instructions="""You are a triage agent responsible for routing user queries to specialized legal agents. Your role is to:
+
+1. Analyze user queries to determine the most appropriate specialized agent
+2. Route queries to one of these agents:
+
+   - Legal Agent: For general legal questions, interpretations, and advice
+   - Research Agent: For legal research, updates on laws, and analysis of legal developments
+   - Contract Agent: For contract creation, review, and modification
+
+3. When routing to the Contract Agent, ensure you have collected:
+   - Type of contract needed
+   - Key terms to include
+   - Specific requirements or conditions
+   - Timeline expectations
+
+Always maintain context across handoffs and ensure a smooth transition between agents.
+
+Include this disclaimer with initial responses:
+"DISCLAIMER: This service provides general guidance and should not be considered formal legal advice. For specific legal matters, please consult with a licensed attorney."
+""",
+            model="gpt-4o",
             handoffs=[legal_agent, research_agent, contract_agent]
         )
-        
+
         logger.info("Triage agent created successfully")
         return agent
+
     except Exception as e:
         logger.error(f"Error creating triage agent: {str(e)}")
-        raise 
+        raise
